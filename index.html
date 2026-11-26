@@ -1,0 +1,148 @@
+<!doctype html>
+<!-- 「もしも地図」PR投稿 お申し込みフォーム v3（2026-11-26）
+     Google フォーム https://forms.gle/fiJJjuhbwCjKRzpf7 と同じ中身の自前ページ。
+     v9：「PRの目的」「写真素材の有無」を必須に。v8：角の丸みをさらに少し控えめに。v7：角の丸みを控えめに・テキストエリアの大きさ固定・入力例を表示。v6：アクセントを青に・入力欄の字を小さく（iPhone の入力時の拡大は maximum-scale=1 で止める。指での拡大は iOS では効く）・スマホの余白を広く。v5：背景を一色・PC の要点を2列・スマホの字を小さく。v4：色をアイコンの緑と灰青に（ユーザー「色味は Instagram に寄せるのはやめて」）。v3：ユーザーの参考画像（2色の背景＋白いカード＋上の3段の進み具合＋2列の入力欄）の組み方に寄せた。色は PR資料のまま
+     設定（GA4 の測定 ID・Clarity のプロジェクト ID・送信先）は form.js の CONFIG だけを書きかえる -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#e5ebf1">
+<title>「もしも地図」PR投稿　お申し込みフォーム</title>
+<meta name="description" content="Instagram アカウント「もしも地図」のPR投稿のお申し込みフォームです。">
+<link rel="icon" href="icon.jpg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="card">
+  <header class="top">
+    <div class="brand"><img src="icon.jpg" alt="" width="32" height="32"><b>もしも地図</b></div>
+    <span class="handle"><span>Instagram </span><b>@moshimo_chizu</b></span>
+  </header>
+
+  <section id="intro">
+    <h1>「もしも地図」PR投稿<br>お申し込みフォーム</h1>
+    <p class="lead">Instagram アカウント「もしも地図」（@moshimo_chizu）の、PR投稿のお申し込みフォームです。お店・施設・地域などを、30秒前後の地図動画（リール）でご紹介します。</p>
+
+    <ul class="facts">
+      <li class="price"><span class="k">料金</span><span class="v">1本 <b>3万円</b>（税込）</span></li>
+      <li><span class="k">お支払い</span><span class="v">仮動画をご確認いただいた後です。それまで費用は発生しません。</span></li>
+      <li><span class="k">再生保証</span><span class="v">投稿後30日間の再生数が1万回に満たない場合は、無料でもう1本投稿します。</span></li>
+    </ul>
+    <p class="after">お申し込み後、2〜3日以内にご連絡いたします。<br>※ご記入いただいた情報は、本件のご連絡にのみ使用いたします。</p>
+  </section>
+
+  <ol class="steps" id="steps" aria-label="入力の進み具合">
+    <li data-step="1" class="now"><a href="#s1"><i>1</i><span>ご連絡先</span></a></li>
+    <li data-step="2"><a href="#s2"><i>2</i><span>PRの内容</span></a></li>
+    <li data-step="3"><a href="#s3"><i>3</i><span>ご確認事項</span></a></li>
+  </ol>
+
+  <form id="pr-form" novalidate>
+
+    <section class="block" id="s1">
+      <h2>ご連絡先</h2>
+      <div class="grid">
+        <div class="q full" data-field="company">
+          <label for="f-company">貴社名・団体名・店舗名<span class="req">必須</span></label>
+          <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="例：株式会社〇〇、〇〇商店" required>
+          <p class="err" id="e-company"></p>
+        </div>
+        <div class="q" data-field="name">
+          <label for="f-name">ご担当者名<span class="req">必須</span></label>
+          <input id="f-name" name="name" type="text" autocomplete="name" placeholder="例：山田 太郎" required>
+          <p class="err" id="e-name"></p>
+        </div>
+        <div class="q" data-field="email">
+          <label for="f-email">メールアドレス<span class="req">必須</span></label>
+          <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="例：info@example.com" required>
+          <p class="err" id="e-email"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="s2">
+      <h2>PRの内容</h2>
+      <div class="grid">
+        <div class="q full" data-field="target">
+          <label for="f-target">PRしたい対象（店舗・施設・商品・地域・計画など）をご記入ください<span class="req">必須</span></label>
+          <textarea id="f-target" name="target" rows="4" placeholder="例：〇〇市の道の駅「〇〇」。今春リニューアルし、地元の野菜と景色が自慢です。" required></textarea>
+          <p class="err" id="e-target"></p>
+        </div>
+        <div class="q" data-field="url">
+          <label for="f-url">公式サイト・SNS の URL</label>
+          <input id="f-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="例：https://example.com">
+          <p class="err" id="e-url"></p>
+        </div>
+        <div class="q" data-field="timing">
+          <label for="f-timing">ご希望の投稿時期</label>
+          <input id="f-timing" name="timing" type="text" placeholder="例：12月中旬、未定">
+          <p class="err" id="e-timing"></p>
+        </div>
+        <fieldset class="q full" data-field="purpose">
+          <legend>PRの目的<span class="req">必須</span></legend>
+          <div class="radios">
+            <label class="radio"><input type="radio" name="purpose" value="認知の拡大" required><i></i><span>認知の拡大</span></label>
+            <label class="radio"><input type="radio" name="purpose" value="来店・来訪の促進"><i></i><span>来店・来訪の促進</span></label>
+            <label class="radio"><input type="radio" name="purpose" value="購入・申し込みの促進"><i></i><span>購入・申し込みの促進</span></label>
+            <label class="radio"><input type="radio" name="purpose" value="その他"><i></i><span>その他</span></label>
+          </div>
+          <p class="err" id="e-purpose"></p>
+        </fieldset>
+        <fieldset class="q full" data-field="photos">
+          <legend>ご提供いただける写真素材の有無<span class="req">必須</span></legend>
+          <div class="radios three">
+            <label class="radio"><input type="radio" name="photos" value="あり" required><i></i><span>あり</span></label>
+            <label class="radio"><input type="radio" name="photos" value="なし"><i></i><span>なし</span></label>
+            <label class="radio"><input type="radio" name="photos" value="未定"><i></i><span>未定</span></label>
+          </div>
+          <p class="err" id="e-photos"></p>
+        </fieldset>
+        <div class="q full" data-field="caution">
+          <label for="f-caution">表現上の注意点、避けたい内容</label>
+          <textarea id="f-caution" name="caution" rows="3" placeholder="例：他店との比較は避けてください。"></textarea>
+          <p class="err" id="e-caution"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="s3">
+      <h2>ご確認事項<span class="req">必須</span></h2>
+      <fieldset class="q confirm" data-field="confirm">
+        <legend class="sr">ご確認事項（必須）</legend>
+        <p class="hint">4点すべてにチェックをお願いします。</p>
+        <div class="checks">
+          <label class="check"><input type="checkbox" name="confirm" value="企画・構成は「もしも地図」が決定します"><i></i><span>企画・構成は「もしも地図」が決定します</span></label>
+          <label class="check"><input type="checkbox" name="confirm" value="投稿には「PR」表記が入ります"><i></i><span>投稿には「PR」表記が入ります</span></label>
+          <label class="check"><input type="checkbox" name="confirm" value="動画データの納品は行いません（投稿のシェア、サイトへの埋め込みは可能です）"><i></i><span>動画データの納品は行いません（投稿のシェア、サイトへの埋め込みは可能です）</span></label>
+          <label class="check"><input type="checkbox" name="confirm" value="料金は3万円（税込）です。仮動画のご確認後、投稿前にお支払いいただきます"><i></i><span>料金は3万円（税込）です。仮動画のご確認後、投稿前にお支払いいただきます</span></label>
+        </div>
+        <p class="err" id="e-confirm"></p>
+      </fieldset>
+    </section>
+
+    <!-- いたずら送信よけ（人には見えない欄。入っていたら送らない） -->
+    <div class="hp" aria-hidden="true"><label>空欄のままにしてください<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+    <div class="send">
+      <button type="submit" id="submit"><span id="submit-label">送信する</span></button>
+      <p class="err" id="e-submit" role="alert"></p>
+    </div>
+  </form>
+
+  <section id="done" hidden tabindex="-1">
+    <div class="ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2>お申し込みありがとうございます。</h2>
+    <p>2〜3日以内に、ご記入のメールアドレス宛てにご連絡いたします。</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>このページでは、使いやすさの改善のために Google アナリティクスと Microsoft Clarity を利用しています。ご記入の内容がこれらに送られることはありません。</p>
+  <p class="c">© もしも地図</p>
+</footer>
+<script src="form.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+/* 「もしも地図」PR投稿フォーム v8（角の丸みをさらに少し控えめに）。v7（角の丸みを控えめに・テキストエリアは大きさ固定・入力例を表示）。v6（アクセントを背景 #e5ebf1 に合う青 #2b5fb4 に・入力欄の字も小さく・スマホは余白を広く）。v5（背景は #e5ebf1 の一色・PC の要点の帯を2列に・スマホは本文14pxで全体に小さく）。v4（色を Instagram 風からアイコンの色に変更：森の緑・空の灰青。グラデーションは使わない）。もとは v3：組み方はユーザーの参考画像（上下2色の背景＋やわらかい球＋白いカード＋3段の進み具合＋2列の入力欄＋中央の丸い送信ボタン）、
+   色は PR資料（work/sponsor_prep/sheet21.html）のまま：むらさき #6d3fc0、Instagram 風のグラデーション、淡いグラデーション */
+:root {
+  --ink: #0f1419; --sub: #5b6270; --label: #2a2f37; --line: #e6e8ec; --txt: #2b5fb4; --err: #c0264b;
+  --field: #f1f2f5; --panel: #f6f6f9; --off: #dfe2e7;
+  --main: #2b5fb4; --main-dk: #224d93; --sky: #e5ebf1; --slate: #5d7389;
+}
+* { box-sizing: border-box; margin: 0; padding: 0 }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px }
+body { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif; font-weight: 400; color: var(--ink); background: var(--sky); font-size: 16px; line-height: 1.75; font-feature-settings: "palt"; -webkit-font-smoothing: antialiased; min-height: 100vh; overflow-x: hidden }
+
+/* ---------- 背景：上は淡い色、下は資料のグラデーション。やわらかい球を数個 */
+.bg { display: none }
+
+/* ---------- カード */
+.card { position: relative; max-width: 880px; margin: 56px auto 0; background: #fff; border-radius: 10px; padding: 30px 52px 44px; box-shadow: 0 24px 70px rgba(30, 50, 70, .22), 0 2px 6px rgba(30, 50, 70, .06) }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px }
+.brand { display: flex; align-items: center; gap: 8px }
+.brand img { width: 32px; height: 32px; border-radius: 50%; display: block }
+.brand b { font-size: 15px; font-weight: 800; letter-spacing: .04em; white-space: nowrap }
+.handle { font-size: 14px; color: var(--sub); white-space: nowrap }
+.handle b { color: var(--txt); font-weight: 700 }
+
+#intro { text-align: center; padding-top: 22px }
+h1 { font-size: 26px; font-weight: 800; line-height: 1.45; letter-spacing: .02em; word-break: auto-phrase }
+.lead { max-width: 560px; margin: 14px auto 0; font-size: 15px; line-height: 1.85; color: #3a4048; word-break: auto-phrase }
+
+/* 要点：参考画像の「保存した学歴」の行と同じ、淡い灰色の帯に小さな見出し＋太い値 */
+.facts { list-style: none; margin-top: 24px; background: var(--panel); border-radius: 6px; display: grid; grid-template-columns: 206px 1fr; grid-template-rows: auto auto; text-align: left }
+.facts li { display: flex; gap: 14px; align-items: baseline; padding: 15px 22px; min-width: 0 }
+.facts .price { grid-row: 1 / 3; flex-direction: column; justify-content: center; align-items: flex-start; gap: 2px; border-right: 1px solid #e3e5ea }
+.facts li:not(.price) + li { border-top: 1px solid #e3e5ea }
+.facts .k { flex: none; width: 4.4em; font-size: 14px; color: var(--sub); font-weight: 600 }
+.facts .price .k { width: auto }
+.facts .v { font-size: 14px; font-weight: 700; line-height: 1.65; color: var(--label); word-break: auto-phrase }
+.facts .price .v { font-size: 15px; white-space: nowrap }
+.facts .price b { font-size: 28px; font-weight: 800; color: var(--txt); letter-spacing: -.01em; margin: 0 1px }
+.after { margin-top: 14px; font-size: 14px; color: var(--sub); line-height: 1.7 }
+
+/* ---------- 3段の進み具合（上にくっつく） */
+.steps { position: sticky; top: 0; z-index: 5; list-style: none; display: flex; justify-content: center; margin: 26px -52px 0; padding: 14px 20px 12px; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-bottom: 1px solid var(--line) }
+.steps li { position: relative; width: 150px; text-align: center }
+.steps li + li::before { content: ""; position: absolute; top: 13px; right: calc(50% + 20px); width: calc(100% - 40px); height: 2px; background: var(--off); transition: background-color .3s }
+.steps li.done + li::before { background: var(--txt) }
+.steps a { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--sub) }
+.steps i { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; font-style: normal; font-size: 14px; font-weight: 800; background: var(--off); color: #7a808a; transition: background-color .25s, color .25s, box-shadow .25s }
+.steps span { font-size: 14px; font-weight: 700; white-space: nowrap }
+.steps li.now i { background: var(--txt); color: #fff; box-shadow: 0 0 0 5px rgba(43,95,180,.16) }
+.steps li.now a { color: var(--ink) }
+.steps li.done i { background: var(--txt); color: transparent; position: relative }
+.steps li.done i::after { content: ""; position: absolute; left: 10px; top: 6px; width: 6px; height: 11px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) }
+.steps li.done a { color: var(--label) }
+
+/* ---------- 入力 */
+.block { padding-top: 30px }
+.block > h2 { display: flex; align-items: center; font-size: 18px; font-weight: 800; letter-spacing: .03em; line-height: 1.4 }
+.block > h2 .req { margin-left: 8px }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 22px; margin-top: 14px }
+.grid .full { grid-column: 1 / -1 }
+.q { border: 0; min-width: 0 }
+.q > label, .q > legend { display: block; width: 100%; font-size: 14px; font-weight: 700; color: var(--label); line-height: 1.55; padding: 0; word-break: auto-phrase }
+fieldset.q > legend { float: left }
+fieldset.q > legend + * { clear: both }
+.req { display: inline-block; margin-left: 6px; font-size: 14px; font-weight: 700; color: var(--txt) }
+.hint { font-size: 14px; color: var(--sub); margin-top: 8px }
+.sr, .q > legend.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; float: none }
+
+input[type=text], input[type=email], textarea {
+  display: block; width: 100%; margin-top: 8px; font: inherit; font-size: 16px; color: var(--ink);
+  padding: 12px 16px; border: 1.5px solid transparent; border-radius: 4px; background: var(--field); -webkit-appearance: none; appearance: none;
+  transition: border-color .15s, background-color .15s, box-shadow .15s }
+input[type=text], input[type=email] { height: 50px }
+textarea { resize: none; min-height: 116px; line-height: 1.65 }
+textarea[rows="3"] { min-height: 92px }
+::placeholder { color: #9aa0aa; opacity: 1 }
+input:hover, textarea:hover { border-color: #dcdfe5 }
+input:focus, textarea:focus { outline: none; background: #fff; border-color: var(--txt); box-shadow: 0 0 0 4px rgba(43,95,180,.13) }
+.q.has-err input[type=text], .q.has-err input[type=email], .q.has-err textarea { background: #fff4f6; border-color: var(--err) }
+
+/* 丸い選択肢：選ぶと、むらさきの丸に白いチェック（参考画像の性別の欄と同じ形） */
+.radios { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; margin-top: 6px }
+.radios.three { grid-template-columns: repeat(3, auto); justify-content: start; column-gap: 34px }
+.radio, .check { position: relative; display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 15px; line-height: 1.55; padding: 8px 0 }
+.radio input, .check input { position: absolute; opacity: 0; width: 1px; height: 1px }
+.radio i, .check i { flex: none; position: relative; width: 22px; height: 22px; margin-top: 1px; border: 1.5px solid #c3c8d0; background: #fff; transition: background-color .15s, border-color .15s }
+.radio i { border-radius: 50% }
+.check i { border-radius: 3px }
+.radio i::after, .check i::after { content: ""; position: absolute; left: 6.5px; top: 2.5px; width: 5px; height: 10px; border: solid #fff; border-width: 0 2.3px 2.3px 0; transform: rotate(45deg) scale(.5); opacity: 0; transition: opacity .12s, transform .12s }
+.radio input:checked + i, .check input:checked + i { background: var(--txt); border-color: var(--txt) }
+.radio input:checked + i::after, .check input:checked + i::after { opacity: 1; transform: rotate(45deg) scale(1) }
+.radio input:checked ~ span { font-weight: 700 }
+.radio:hover i, .check:hover i { border-color: var(--txt) }
+.radio input:focus-visible + i, .check input:focus-visible + i { box-shadow: 0 0 0 4px rgba(43,95,180,.22) }
+
+/* ご確認事項：淡い灰色の箱にまとめる */
+.confirm { margin-top: 6px }
+.checks { margin-top: 12px; background: var(--panel); border-radius: 6px; padding: 6px 20px }
+.check { padding: 13px 0; font-weight: 600; word-break: auto-phrase }
+.check + .check { border-top: 1px solid #e7e8ed }
+.q.has-err .checks { box-shadow: inset 0 0 0 1.5px var(--err) }
+
+.err { font-size: 14px; color: var(--err); font-weight: 700; margin-top: 6px }
+.err:empty { display: none }
+.err a { color: inherit }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden }
+
+/* 送信：中央の丸いボタン */
+.send { margin-top: 36px; text-align: center }
+button { display: inline-flex; align-items: center; justify-content: center; min-width: 260px; height: 54px; padding: 0 40px; font: inherit; font-size: 16px; font-weight: 800; letter-spacing: .12em; color: #fff; background: var(--main); border: 0; border-radius: 6px; cursor: pointer; box-shadow: 0 10px 26px rgba(34, 77, 147, .28); transition: transform .12s, box-shadow .12s, opacity .15s }
+button:hover { background: var(--main-dk); transform: translateY(-1px); box-shadow: 0 14px 30px rgba(34, 77, 147, .32) }
+button:active { transform: translateY(0) }
+button:disabled { opacity: .6; cursor: wait; transform: none }
+button:focus-visible { outline: 3px solid rgba(43,95,180,.45); outline-offset: 3px }
+.send .err { text-align: center; line-height: 1.7; margin-top: 12px }
+
+/* 送信後 */
+#done { padding: 56px 0 24px; text-align: center; outline: none }
+#done .ok { width: 80px; height: 80px; margin: 0 auto; border-radius: 50%; background: var(--main); padding: 3px; box-shadow: 0 10px 26px rgba(34, 77, 147, .22) }
+#done .ok svg { display: block; width: 100%; height: 100%; border-radius: 50%; background: #fff; padding: 19px; fill: none; stroke: var(--txt); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round }
+#done h2 { word-break: auto-phrase; margin-top: 24px; font-size: 21px; font-weight: 800; line-height: 1.5 }
+#done p { margin-top: 10px; font-size: 16px; color: #3a4048; word-break: auto-phrase }
+
+.foot { max-width: 880px; margin: 0 auto; padding: 22px 24px calc(32px + env(safe-area-inset-bottom)); font-size: 14px; line-height: 1.7; color: var(--sub); text-align: center }
+.foot .c { margin-top: 8px; font-weight: 700 }
+
+/* ---------- スマホ */
+@media (max-width: 640px) {
+  body { font-size: 14px }
+  .card { margin: 12px 8px 0; padding: 22px 20px 36px; border-radius: 8px }
+  .brand img { width: 28px; height: 28px }
+  .brand b { font-size: 14px }
+  .handle { font-size: 13px }
+  .handle span { display: none }
+  #intro { padding-top: 22px }
+  h1 { font-size: 19px }
+  .lead { font-size: 14px; line-height: 1.85; text-align: left; margin-top: 14px }
+  .facts { grid-template-columns: 1fr; grid-template-rows: none; border-radius: 6px; margin-top: 22px }
+  .facts li, .facts .price { grid-row: auto; flex-direction: row; justify-content: flex-start; align-items: baseline; gap: 12px; padding: 13px 16px; border-right: 0 }
+  .facts li + li { border-top: 1px solid #e3e5ea }
+  .facts .k, .facts .price .k { width: 4.6em; font-size: 13px }
+  .facts .v { font-size: 13px; line-height: 1.6 }
+  .facts .price .v { font-size: 14px }
+  .facts .price b { font-size: 20px }
+  .after { font-size: 13px; line-height: 1.75; text-align: left; margin-top: 14px }
+  .steps { margin: 26px -20px 0; padding: 12px 4px 11px }
+  .steps li { width: 33.3% }
+  .steps li + li::before { top: 11px }
+  .steps i { width: 24px; height: 24px; font-size: 13px }
+  .steps li.done i::after { left: 8.5px; top: 5px; width: 5px; height: 10px }
+  .steps span { font-size: 13px }
+  .block { padding-top: 34px }
+  .block > h2 { font-size: 16px }
+  .grid { grid-template-columns: 1fr; gap: 24px; margin-top: 16px }
+  .q > label, .q > legend { font-size: 13px }
+  .req { font-size: 13px }
+  .hint { font-size: 13px }
+  input[type=text], input[type=email], textarea { font-size: 14px; margin-top: 8px }
+  input[type=text], input[type=email] { height: 46px; padding: 10px 14px }
+  textarea { min-height: 112px; padding: 11px 14px }
+  textarea[rows="3"] { min-height: 92px }
+  .radios { grid-template-columns: 1fr; gap: 0 }
+  .radios.three { column-gap: 26px }
+  .radio, .check { font-size: 14px; padding: 8px 0 }
+  .radio i, .check i { width: 20px; height: 20px }
+  .radio i::after, .check i::after { left: 5.5px; top: 2px; width: 5px; height: 9px }
+  .checks { padding: 4px 16px; border-radius: 6px; margin-top: 14px }
+  .check { padding: 13px 0; line-height: 1.65 }
+  .err { font-size: 13px }
+  .send { margin-top: 36px }
+  button { width: 100%; min-width: 0; height: 50px; font-size: 15px }
+  #done { padding: 44px 0 16px }
+  #done .ok { width: 64px; height: 64px }
+  #done .ok svg { padding: 15px }
+  #done h2 { font-size: 18px; margin-top: 18px }
+  #done p { font-size: 14px }
+  .foot { font-size: 13px; padding-top: 18px }
+}
