@@ -16,15 +16,16 @@
   'use strict';
 
   var CONFIG = {
-    GA4_ID: 'G-XXXXXXXXXX',                                         // GA4 の測定 ID
-    CLARITY_ID: 'XXXXXXXXXX',                                       // Microsoft Clarity のプロジェクト ID
-    ENDPOINT: 'https://script.google.com/macros/s/XXXXXXXXXX/exec', // Apps Script のウェブアプリの URL
+    GA4_ID: 'G-WR25XBTGB0',                                           // GA4 の測定 ID
+    CLARITY_ID: 'zjh8rxzf5d',                                       // Microsoft Clarity のプロジェクト ID
+    ENDPOINT: 'https://script.google.com/macros/s/AKfycbxvvtF0Gna6umeR4Oi5qoOpquk05ofl3DECXGDle3vMn1Qjs7_qKZGobnHUJJMc3KJkJg/exec', // Apps Script のウェブアプリの URL
     FALLBACK_FORM: 'https://forms.gle/fiJJjuhbwCjKRzpf7'            // 送れなかったときの案内先（いまの Google フォーム）
   };
 
   var isSet = function (v) { return v && !/X{6,}/.test(v); };
   var params = new URLSearchParams(location.search);
-  var DEBUG = params.get('debug') === '1' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:';
+  var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:';
+  var DEBUG = params.get('debug') === '1' || LOCAL;
 
   // ------------------------------------------------------------ 流入元（?src=instagram など。なければ utm_source、それもなければ direct）
   var SRC = (function () {
@@ -215,7 +216,9 @@
 
   function send(data) {
     if (!isSet(CONFIG.ENDPOINT)) {
-      // 送信先が未設定：外には何も送らず、届いたことにする（ローカルの試し）
+      // 送信先が未設定：パソコンの中の試しのときだけ、外には何も送らず届いたことにする。
+      // 公開したページで未設定のときは、届いたふりをせず失敗として Google フォームを案内する（申し込みが消えるのを防ぐ）
+      if (!LOCAL) { console.error('[pr-form] 送信先（CONFIG.ENDPOINT）が未設定です'); return Promise.reject(new Error('no_endpoint')); }
       if (DEBUG) console.log('[pr-form] (送信先が未設定のため、外部には送っていません。項目: ' + Object.keys(data).join(',') + ')');
       return new Promise(function (ok) { setTimeout(ok, 500); });
     }
