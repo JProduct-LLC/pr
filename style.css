@@ -1,4 +1,4 @@
-/* 「もしも地図」PR投稿フォーム v8（角の丸みをさらに少し控えめに）。v7（角の丸みを控えめに・テキストエリアは大きさ固定・入力例を表示）。v6（アクセントを背景 #e5ebf1 に合う青 #2b5fb4 に・入力欄の字も小さく・スマホは余白を広く）。v5（背景は #e5ebf1 の一色・PC の要点の帯を2列に・スマホは本文14pxで全体に小さく）。v4（色を Instagram 風からアイコンの色に変更：森の緑・空の灰青。グラデーションは使わない）。もとは v3：組み方はユーザーの参考画像（上下2色の背景＋やわらかい球＋白いカード＋3段の進み具合＋2列の入力欄＋中央の丸い送信ボタン）、
+/* 「もしも地図」PR投稿フォーム v10（メールの確認欄・送信前の確認画面）。v8（角の丸みをさらに少し控えめに）。v7（角の丸みを控えめに・テキストエリアは大きさ固定・入力例を表示）。v6（アクセントを背景 #e5ebf1 に合う青 #2b5fb4 に・入力欄の字も小さく・スマホは余白を広く）。v5（背景は #e5ebf1 の一色・PC の要点の帯を2列に・スマホは本文14pxで全体に小さく）。v4（色を Instagram 風からアイコンの色に変更：森の緑・空の灰青。グラデーションは使わない）。もとは v3：組み方はユーザーの参考画像（上下2色の背景＋やわらかい球＋白いカード＋3段の進み具合＋2列の入力欄＋中央の丸い送信ボタン）、
    色は PR資料（work/sponsor_prep/sheet21.html）のまま：むらさき #6d3fc0、Instagram 風のグラデーション、淡いグラデーション */
 :root {
   --ink: #0f1419; --sub: #5b6270; --label: #2a2f37; --line: #e6e8ec; --txt: #2b5fb4; --err: #c0264b;
@@ -115,6 +115,21 @@ button:disabled { opacity: .6; cursor: wait; transform: none }
 button:focus-visible { outline: 3px solid rgba(43,95,180,.45); outline-offset: 3px }
 .send .err { text-align: center; line-height: 1.7; margin-top: 12px }
 
+/* 確認画面 */
+#review { padding-top: 30px; outline: none }
+#review > h2 { font-size: 18px; font-weight: 800; letter-spacing: .03em }
+.review-lead { margin-top: 8px; font-size: 14px; color: var(--sub) }
+.review-list { margin-top: 18px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 200px 1fr }
+.review-list dt, .review-list dd { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.7 }
+.review-list dt { font-weight: 700; color: var(--label); padding-right: 16px }
+.review-list dd { white-space: pre-wrap; word-break: break-word; color: var(--ink) }
+.review-list dd.none { color: #9aa0aa }
+.review-actions { margin-top: 32px; display: flex; justify-content: center; gap: 14px }
+.review-actions button { min-width: 220px }
+button.ghost { background: #fff; color: var(--txt); border: 1.5px solid var(--txt); box-shadow: none }
+button.ghost:hover { background: #f2f6fc; box-shadow: none; transform: none }
+#review .err { text-align: center; line-height: 1.7; margin-top: 14px }
+
 /* 送信後 */
 #done { padding: 56px 0 24px; text-align: center; outline: none }
 #done .ok { width: 80px; height: 80px; margin: 0 auto; border-radius: 50%; background: var(--main); padding: 3px; box-shadow: 0 10px 26px rgba(34, 77, 147, .22) }
@@ -176,4 +191,12 @@ button:focus-visible { outline: 3px solid rgba(43,95,180,.45); outline-offset: 3
   #done h2 { font-size: 18px; margin-top: 18px }
   #done p { font-size: 14px }
   .foot { font-size: 13px; padding-top: 18px }
+  #review { padding-top: 24px }
+  #review > h2 { font-size: 16px }
+  .review-lead { font-size: 13px }
+  .review-list { grid-template-columns: 1fr; margin-top: 14px }
+  .review-list dt { padding: 12px 0 2px; border-bottom: 0; font-size: 13px; color: var(--sub) }
+  .review-list dd { padding: 0 0 12px }
+  .review-actions { flex-direction: column-reverse; gap: 10px; margin-top: 28px }
+  .review-actions button { width: 100%; min-width: 0 }
 }

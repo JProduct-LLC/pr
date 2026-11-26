@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- 「もしも地図」PR投稿 お申し込みフォーム v3（2026-11-26）
      Google フォーム https://forms.gle/fiJJjuhbwCjKRzpf7 と同じ中身の自前ページ。
-     v9：「PRの目的」「写真素材の有無」を必須に。v8：角の丸みをさらに少し控えめに。v7：角の丸みを控えめに・テキストエリアの大きさ固定・入力例を表示。v6：アクセントを青に・入力欄の字を小さく（iPhone の入力時の拡大は maximum-scale=1 で止める。指での拡大は iOS では効く）・スマホの余白を広く。v5：背景を一色・PC の要点を2列・スマホの字を小さく。v4：色をアイコンの緑と灰青に（ユーザー「色味は Instagram に寄せるのはやめて」）。v3：ユーザーの参考画像（2色の背景＋白いカード＋上の3段の進み具合＋2列の入力欄）の組み方に寄せた。色は PR資料のまま
+     v10：メールアドレスの確認欄と、送信前の確認画面を追加。v9：「PRの目的」「写真素材の有無」を必須に。v8：角の丸みをさらに少し控えめに。v7：角の丸みを控えめに・テキストエリアの大きさ固定・入力例を表示。v6：アクセントを青に・入力欄の字を小さく（iPhone の入力時の拡大は maximum-scale=1 で止める。指での拡大は iOS では効く）・スマホの余白を広く。v5：背景を一色・PC の要点を2列・スマホの字を小さく。v4：色をアイコンの緑と灰青に（ユーザー「色味は Instagram に寄せるのはやめて」）。v3：ユーザーの参考画像（2色の背景＋白いカード＋上の3段の進み具合＋2列の入力欄）の組み方に寄せた。色は PR資料のまま
      設定（GA4 の測定 ID・Clarity のプロジェクト ID・送信先）は form.js の CONFIG だけを書きかえる -->
 <html lang="ja">
 <head>
@@ -45,7 +45,7 @@
     <section class="block" id="s1">
       <h2>ご連絡先</h2>
       <div class="grid">
-        <div class="q full" data-field="company">
+        <div class="q" data-field="company">
           <label for="f-company">貴社名・団体名・店舗名<span class="req">必須</span></label>
           <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="例：株式会社〇〇、〇〇商店" required>
           <p class="err" id="e-company"></p>
@@ -59,6 +59,11 @@
           <label for="f-email">メールアドレス<span class="req">必須</span></label>
           <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="例：info@example.com" required>
           <p class="err" id="e-email"></p>
+        </div>
+        <div class="q" data-field="email_confirm">
+          <label for="f-email_confirm">メールアドレス（確認用）<span class="req">必須</span></label>
+          <input id="f-email_confirm" name="email_confirm" type="email" inputmode="email" autocomplete="email" placeholder="確認のため、もう一度ご入力ください" required>
+          <p class="err" id="e-email_confirm"></p>
         </div>
       </div>
     </section>
@@ -127,10 +132,21 @@
     <div class="hp" aria-hidden="true"><label>空欄のままにしてください<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 
     <div class="send">
-      <button type="submit" id="submit"><span id="submit-label">送信する</span></button>
+      <button type="submit" id="submit"><span id="submit-label">入力内容を確認する</span></button>
       <p class="err" id="e-submit" role="alert"></p>
     </div>
   </form>
+
+  <section id="review" hidden tabindex="-1" aria-labelledby="review-h">
+    <h2 id="review-h">入力内容の確認</h2>
+    <p class="review-lead">以下の内容でお申し込みします。よろしければ「この内容で送信する」を押してください。</p>
+    <dl class="review-list" id="review-list"></dl>
+    <div class="review-actions">
+      <button type="button" class="ghost" id="back">修正する</button>
+      <button type="button" id="send"><span id="send-label">この内容で送信する</span></button>
+    </div>
+    <p class="err" id="e-send" role="alert"></p>
+  </section>
 
   <section id="done" hidden tabindex="-1">
     <div class="ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
