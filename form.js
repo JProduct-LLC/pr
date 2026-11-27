@@ -1,4 +1,4 @@
-/* 「もしも地図」PR投稿フォーム v10（2026-11-26。v10 でメールアドレスの確認欄と、送信前の確認画面を追加。v9 で「PRの目的」「写真素材の有無」を必須に。v3 は上の3段の進み具合〈ご連絡先・PRの内容・ご確認事項〉を表示）
+/* 「もしも地図」PR投稿フォーム v11（2026-11-28。v11 で資料ページ〈shiryo.html〉と実績の欄のタップを計測。このファイルは資料ページでも読み込む。v10 は 2026-11-26。v10 でメールアドレスの確認欄と、送信前の確認画面を追加。v9 で「PRの目的」「写真素材の有無」を必須に。v3 は上の3段の進み具合〈ご連絡先・PRの内容・ご確認事項〉を表示）
  * 書きかえるのは CONFIG の3つだけ（設定手順書を参照）。XXXX のままの所は読み込まない／送らない（試しの動き）。
  * 計測に送るのは「どの項目か」だけ。入力された文字は GA4 にも Clarity にも送らない。
  *
@@ -12,6 +12,10 @@
  *   form_submit           確認画面の「送信する」で送信を始めた     filled_optional（任意3項目〈URL・投稿時期・注意点〉のうち書いた数）
  *   form_submit_success   送信が届いた
  *   form_submit_fail      送信に失敗した              reason
+ *   doc_click             フォームから資料ページへのリンクを押した  where（banner）
+ *   reel_click            実績のリールを押した（Instagram が開く）  reel（iwate など）, page（form / doc）
+ *   doc_view              資料ページを開いた
+ *   doc_to_form           資料ページから「お申し込みフォームへ」を押した  where（bottom）
  * 動きの確認：localhost や ?debug=1 で開くと、コンソールに [pr-form] の行が順に出る
  */
 (function () {
@@ -88,7 +92,7 @@
     if (clarityOn) {
       // 録画を「どこまで進んだか」で絞りこめるように、Clarity にも目印を残す
       if (name === 'field_start') window.clarity('set', 'last_field', p.step_name);
-      if (/^form_/.test(name)) window.clarity('event', name);
+      if (/^(form_|doc_|reel_)/.test(name)) window.clarity('event', name);
       if (name === 'field_error') window.clarity('event', 'field_error_' + p.field_name);
     }
   }
@@ -98,8 +102,20 @@
     return o;
   }
 
-  // ------------------------------------------------------------ 入力の確かめ
+  // ------------------------------------------------------------ v11：資料ページへのリンク・実績のリールのタップ（data-track の付いたリンク）
   var form = document.getElementById('pr-form');
+  var PAGE = form ? 'form' : 'doc';
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest && ev.target.closest('[data-track]'); if (!a) return;
+    var p = { page: PAGE };
+    if (a.getAttribute('data-where')) p.where = a.getAttribute('data-where');
+    if (a.getAttribute('data-reel')) p.reel = a.getAttribute('data-reel');
+    track(a.getAttribute('data-track'), p);
+  });
+  // 資料ページ（フォームが無いページ）は、ここまでで終わり
+  if (!form) { track('doc_view', {}); return; }
+
+  // ------------------------------------------------------------ 入力の確かめ
   var EMAIL_RE = /^[^\s@＠]+@[^\s@＠]+\.[^\s@＠.]+$/;
   function value(f) {
     if (f === 'purpose' || f === 'photos') { var r = form.querySelector('input[name="' + f + '"]:checked'); return r ? r.value : ''; }

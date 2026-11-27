@@ -1,4 +1,4 @@
-/* 「もしも地図」PR投稿フォーム v10（メールの確認欄・送信前の確認画面）。v8（角の丸みをさらに少し控えめに）。v7（角の丸みを控えめに・テキストエリアは大きさ固定・入力例を表示）。v6（アクセントを背景 #e5ebf1 に合う青 #2b5fb4 に・入力欄の字も小さく・スマホは余白を広く）。v5（背景は #e5ebf1 の一色・PC の要点の帯を2列に・スマホは本文14pxで全体に小さく）。v4（色を Instagram 風からアイコンの色に変更：森の緑・空の灰青。グラデーションは使わない）。もとは v3：組み方はユーザーの参考画像（上下2色の背景＋やわらかい球＋白いカード＋3段の進み具合＋2列の入力欄＋中央の丸い送信ボタン）、
+/* 「もしも地図」PR投稿フォーム v11（上に「はじめにご覧ください」の資料への案内と、実績の欄）。v10（メールの確認欄・送信前の確認画面）。v8（角の丸みをさらに少し控えめに）。v7（角の丸みを控えめに・テキストエリアは大きさ固定・入力例を表示）。v6（アクセントを背景 #e5ebf1 に合う青 #2b5fb4 に・入力欄の字も小さく・スマホは余白を広く）。v5（背景は #e5ebf1 の一色・PC の要点の帯を2列に・スマホは本文14pxで全体に小さく）。v4（色を Instagram 風からアイコンの色に変更：森の緑・空の灰青。グラデーションは使わない）。もとは v3：組み方はユーザーの参考画像（上下2色の背景＋やわらかい球＋白いカード＋3段の進み具合＋2列の入力欄＋中央の丸い送信ボタン）、
    色は PR資料（work/sponsor_prep/sheet21.html）のまま：むらさき #6d3fc0、Instagram 風のグラデーション、淡いグラデーション */
 :root {
   --ink: #0f1419; --sub: #5b6270; --label: #2a2f37; --line: #e6e8ec; --txt: #2b5fb4; --err: #c0264b;
@@ -37,6 +37,36 @@ h1 { font-size: 26px; font-weight: 800; line-height: 1.45; letter-spacing: .02em
 .facts .price .v { font-size: 15px; white-space: nowrap }
 .facts .price b { font-size: 28px; font-weight: 800; color: var(--txt); letter-spacing: -.01em; margin: 0 1px }
 .after { margin-top: 14px; font-size: 14px; color: var(--sub); line-height: 1.7 }
+
+/* ---------- v11：はじめにご覧ください（資料ページへ）＋ これまでの実績 */
+.firstlook { display: grid; grid-template-columns: 132px 1fr; gap: 26px; align-items: center; margin-top: 26px; padding: 22px 30px 22px 22px; background: var(--main); color: #fff; border-radius: 8px; text-decoration: none; text-align: left; box-shadow: 0 10px 28px rgba(43, 95, 180, .28); transition: background-color .2s, transform .2s }
+.firstlook:hover { background: var(--main-dk); transform: translateY(-1px) }
+.firstlook img { width: 132px; height: auto; border-radius: 4px; box-shadow: 0 6px 16px rgba(0, 0, 0, .22); transform: rotate(-2deg) }
+.fl-body { display: block; min-width: 0 }
+.fl-tag { display: inline-block; background: #fff; color: var(--main); font-size: 13px; font-weight: 800; letter-spacing: .08em; padding: 3px 12px; border-radius: 4px }
+.fl-title { display: block; margin-top: 10px; font-size: 27px; font-weight: 800; line-height: 1.35; letter-spacing: .02em }
+.fl-title .nw { white-space: nowrap }
+.fl-desc { display: block; margin-top: 6px; font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, .88); word-break: auto-phrase }
+.fl-go { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; height: 42px; padding: 0 22px; background: #fff; color: var(--main); border-radius: 6px; font-size: 15px; font-weight: 800; letter-spacing: .04em }
+.fl-go svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round }
+
+.proof { margin-top: 30px; text-align: left }
+.proof-h { font-size: 17px; font-weight: 800; letter-spacing: .04em }
+.kpi { list-style: none; margin-top: 12px; background: var(--panel); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); padding: 16px 0 14px }
+.kpi li { padding: 0 22px; border-left: 1px solid #e3e5ea; min-width: 0 }
+.kpi li:first-child { border-left: 0 }
+.kpi b { display: block; white-space: nowrap; font-size: 34px; font-weight: 800; line-height: 1.05; letter-spacing: -.01em; color: var(--txt); font-feature-settings: "tnum" }
+.kpi b i { font-style: normal; font-size: 23px; margin-left: 1px }
+.kpi b small { font-size: 13px; margin-left: 1px }
+.kpi span { display: block; margin-top: 5px; font-size: 13px; font-weight: 600; color: var(--sub) }
+.reels { list-style: none; margin-top: 14px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px }
+.reels a { display: block; text-decoration: none }
+.reels img { width: 100%; height: auto; aspect-ratio: 9 / 14.5; object-fit: cover; border-radius: 6px; transition: opacity .2s }
+.reels a:hover img { opacity: .88 }
+.reels b { display: block; margin-top: 6px; font-size: 17px; font-weight: 800; line-height: 1; color: var(--txt); white-space: nowrap; font-feature-settings: "tnum" }
+.reels b i { font-style: normal; font-size: 13px }
+.reels b small { font-size: 10px }
+.proof-note { margin-top: 9px; font-size: 12px; line-height: 1.6; color: var(--sub) }
 
 /* ---------- 3段の進み具合（上にくっつく） */
 .steps { position: sticky; top: 0; z-index: 5; list-style: none; display: flex; justify-content: center; margin: 26px -52px 0; padding: 14px 20px 12px; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-bottom: 1px solid var(--line) }
@@ -159,6 +189,25 @@ button.ghost:hover { background: #f2f6fc; box-shadow: none; transform: none }
   .facts .price .v { font-size: 14px }
   .facts .price b { font-size: 20px }
   .after { font-size: 13px; line-height: 1.75; text-align: left; margin-top: 14px }
+  .firstlook { grid-template-columns: 82px 1fr; gap: 16px; margin-top: 22px; padding: 18px 16px 18px 14px; align-items: start }
+  .firstlook img { width: 82px; margin-top: 4px }
+  .fl-tag { font-size: 12px; padding: 2px 9px }
+  .fl-title { font-size: 20px; margin-top: 8px }
+  .fl-desc { font-size: 13px; line-height: 1.65 }
+  .fl-go { margin-top: 12px; height: 40px; padding: 0 16px; font-size: 14px }
+  .proof { margin-top: 28px }
+  .proof-h { font-size: 16px }
+  .kpi { grid-template-columns: 1fr; padding: 2px 16px }
+  .kpi li { border-left: 0; border-top: 1px solid #e3e5ea; padding: 11px 0; display: flex; align-items: baseline; justify-content: space-between; gap: 10px }
+  .kpi li:first-child { border-top: 0 }
+  .kpi b { order: 2; font-size: 25px }
+  .kpi b i { font-size: 17px }
+  .kpi b small { font-size: 11px }
+  .kpi span { order: 1; margin-top: 0; font-size: 12.5px }
+  .reels { grid-template-columns: repeat(3, 1fr); gap: 14px 8px }
+  .reels b { font-size: 15px; margin-top: 5px }
+  .reels b i { font-size: 12px }
+  .proof-note { font-size: 11.5px }
   .steps { margin: 26px -20px 0; padding: 12px 4px 11px }
   .steps li { width: 33.3% }
   .steps li + li::before { top: 11px }
